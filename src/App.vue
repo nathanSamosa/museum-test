@@ -14,18 +14,18 @@ import Header from './components/Header.vue'
 import TopicPage from './components/TopicPage.vue'
 
 export default {
-  name: 'App',
-  components: {
-    Header, TopicPage
-  },
-  data() {
-      return {
-          pages: PAGES
-      }
-  },
-  created() {
-      console.log(this.pages)
-  }
+    name: 'App',
+    components: {
+        Header, TopicPage
+    },
+    computed: {
+        pages() {
+            return PAGES
+        }
+    },
+    created() {
+        console.log(this.pages)
+    }
 }
 </script>
 

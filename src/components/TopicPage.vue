@@ -154,12 +154,14 @@ export default {
     },
     created() {
         //Fetch data specific to this page from API using a route from the prop config...
+        //If the database is too large, implement pagination on the fetch
         this.list = this.combinedList
     }
 };
 </script>
 
 <style lang="scss" scoped>
+//Renamed elements to illustrate the generic mapping from App
 .topic-page {
     margin: 40px 5%;
     display: flex;

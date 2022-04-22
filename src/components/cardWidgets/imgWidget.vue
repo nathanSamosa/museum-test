@@ -3,13 +3,13 @@
         <div
             class="museum-highlight__img__partner-banner"
             v-if="card.partner"
-            :style="`background-color: ${partners[card.partner].color};`"
+            :style="bannerColor"
         >
             From the {{card.partner}}
         </div>
         <i
-            :class="`fa-2xl fa-solid fa-${page.badge.icon}`"
-            :style="`color: ${page.badge.color}`"
+            :class="iconFa"
+            :style="iconColor"
         />
         <img
             :src="card.image || card.img" 
@@ -30,6 +30,18 @@ export default {
     computed: {
         partners() {
             return PARTNERS
+        },
+        bannerColor() {
+            const color = this.partners[this.card.partner].color;
+            return `background-color: ${color};`
+        },
+        iconFa() {
+            const icon = this.page.badge.icon;
+            return `fa-2xl fa-solid fa-${icon}`
+        },
+        iconColor() {
+            const color = this.page.badge.color;
+            return `color: ${color}`
         }
     }
     // data() {
