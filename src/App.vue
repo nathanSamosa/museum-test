@@ -1,9 +1,8 @@
 <template>
     <Header />
-    <component
+    <TopicPage
         v-for="page in pages"
         :key="page"
-        :is="`${page.name}Page`"
         :page="page"
     />
 </template>
@@ -12,12 +11,12 @@
 import { PAGES } from './config/pages.js'
 
 import Header from './components/Header.vue'
-import SpacePage from './components/SpacePage.vue'
+import TopicPage from './components/TopicPage.vue'
 
 export default {
   name: 'App',
   components: {
-    Header, SpacePage
+    Header, TopicPage
   },
   data() {
       return {

@@ -50,13 +50,16 @@ This task is spread between two vue components.
 
 
 <template>
-    <div class="space-page">
+    <div class="topic-page">
 
-        <h1 class="space-page__title">
+        <h1
+            class="topic-page__title"
+            :style="`color: ${page.accentColor};`"
+        >
             {{page.name}}
         </h1>
 
-        <ul class="space-page__list">
+        <ul class="topic-page__list">
                 <MuseumHighlight
                     v-for="card in list"
                     :key="card"
@@ -72,7 +75,7 @@ This task is spread between two vue components.
 import MuseumHighlight from './MuseumHighlight';
 
 export default {
-    name: 'SpacePage',
+    name: 'TopicPage',
     components: {
         MuseumHighlight,
     },
@@ -157,14 +160,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.space-page {
+.topic-page {
     margin: 40px 5%;
     display: flex;
     flex-direction: column;
     gap: 40px;
 
     &__title {
-        color: #2c3791;
         font-size: 48px;
         font-weight: 300;
     }

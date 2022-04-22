@@ -7,7 +7,16 @@ const PAGES = {
             color: "#F0B800"
         },
         contents: ["news", "quiz"]
-    }
+    },
+    // DINOSAUR: {
+    //     accentColor: "#199600",
+    //     name: "Dinosaurs",
+    //     badge: {
+    //         icon: "bone",
+    //         color: "#9d40f5"
+    //     },
+    //     contents: ["quiz"]
+    // }
 }
 
 const PARTNERS = {
@@ -16,7 +25,13 @@ const PARTNERS = {
     }
 }
 
+const API_ROUTES = {
+    SPACE_GET: `${"someRoute"}/space`,
+    DINOSAUR_GET: `${"someRoute"}/dinosaur`,
+}
+
 export {
     PAGES,
-    PARTNERS
+    PARTNERS,
+    API_ROUTES 
 }
