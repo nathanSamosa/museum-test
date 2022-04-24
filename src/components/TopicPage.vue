@@ -144,6 +144,7 @@ export default {
             })
         },
         createHighlights() {
+            //although we use spaceHighlights, this would be more generic like "museumHighlights" and content is specific on the route
             const highlights = [ ...this.spaceHighlights, ...this.partnersToArray ]
             const formattedHighlights = this.formatHighlights(highlights)
             return formattedHighlights
