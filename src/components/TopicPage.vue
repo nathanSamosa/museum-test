@@ -71,7 +71,7 @@ This task is spread between two vue components.
 </template>
 
 <script>
-
+import _ from 'lodash';
 import MuseumHighlight from './MuseumHighlight';
 import mapping from '../mixins/mapping'
 
@@ -147,7 +147,8 @@ export default {
             //although we use spaceHighlights, this would be more generic like "museumHighlights" and content is specific on the route
             const highlights = [ ...this.spaceHighlights, ...this.partnersToArray ]
             const formattedHighlights = this.formatHighlights(highlights)
-            return formattedHighlights
+            const sortedHighlights = _.sortBy(formattedHighlights, [function(o) { return o.date; }]).reverse()
+            return sortedHighlights
         }
     },
     methods: {
