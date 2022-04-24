@@ -22,6 +22,9 @@ export default {
         pages() {
             return PAGES
         }
+    },
+    created() {
+        console.log(this.pages)
     }
 }
 </script>

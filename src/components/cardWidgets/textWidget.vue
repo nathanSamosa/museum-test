@@ -1,14 +1,20 @@
 <template>
-  <div
+    <div
         class="card-widgets__news"
     >
-        <h3>Latest:</h3>
-        <p>
-            {{card.news.title}}
+        <h3
+            v-if="data.title"
+        >
+            {{data.title}}
+        </h3>
+        <p
+            v-if="data.text"
+        >
+            {{data.text}}
         </p>
         <div
             class="card-widgets__news__date"
-            v-if="card.news.date"
+            v-if="data.date"
         >
             {{newsDate}}
         </div>
@@ -17,16 +23,16 @@
 
 <script>
 export default {
-    name: 'newsWidget',
+    name: 'textWidget',
     props: {
-        card: Object
+        data: Object
     },
     computed: {
         newsDate() {
-            const d = new Date(this.card.news.date)
+            const d = new Date(this.data.date)
             return d.toDateString()
         }
-    },
+    }
 }
 </script>
 

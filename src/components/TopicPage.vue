@@ -61,7 +61,7 @@ This task is spread between two vue components.
 
         <ul class="topic-page__list">
                 <MuseumHighlight
-                    v-for="card in list"
+                    v-for="card in createHighlights"
                     :key="card"
                     :page="page"
                     :card="card"
@@ -73,6 +73,7 @@ This task is spread between two vue components.
 <script>
 
 import MuseumHighlight from './MuseumHighlight';
+import mapping from '../mixins/mapping'
 
 export default {
     name: 'TopicPage',
@@ -80,6 +81,7 @@ export default {
         MuseumHighlight,
     },
     mixins: [
+        mapping
     ],
     props: {
         page: Object
@@ -131,37 +133,33 @@ export default {
                     info: 'The Mauna Kea Observatories (MKO) are a number of independent astronomical research facilities and large telescope observatories that are located at the summit of Mauna Kea on the Big Island of Hawaiʻi, United States.',
                     image: '',
                     name: 'Mauna Kea Observatories',
-                },
+                }
             },
         };
     },
     computed: {
         partnersToArray() {
-            return Object.keys(this.spacePartners).map(e => {
-                return { ...this.spacePartners[e], partner: e }
+            return Object.keys(this.spacePartners).map(key => {
+                return { ...this.spacePartners[key], partner: key }
             })
         },
-        combinedList() {
-            const combinedList = [ ...this.spaceHighlights, ...this.partnersToArray]
-            combinedList.sort((a, b) => {
-                return new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt);
-            })
-            return combinedList
-        },
+        createHighlights() {
+            const highlights = [ ...this.spaceHighlights, ...this.partnersToArray ]
+            const formattedHighlights = this.formatHighlights(highlights)
+            return formattedHighlights
+        }
     },
     methods: {
-
-    },
-    created() {
-        //Fetch data specific to this page from API using a route from the prop config...
-        //If the database is too large, implement pagination on the fetch
-        this.list = this.combinedList
+        sortList(list) {
+            list.sort((a, b) => {
+                return new Date(b.date) - new Date(a.date)
+            })
+        }
     }
 };
 </script>
 
 <style lang="scss" scoped>
-//Renamed elements to illustrate the generic mapping from App
 .topic-page {
     margin: 40px 5%;
     display: flex;

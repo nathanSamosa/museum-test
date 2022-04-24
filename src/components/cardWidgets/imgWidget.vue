@@ -2,7 +2,7 @@
     <div class="museum-highlight__img">
         <div
             class="museum-highlight__img__partner-banner"
-            v-if="card.partner"
+            v-if="card.partner in partners"
             :style="bannerColor"
         >
             From the {{card.partner}}
@@ -12,8 +12,8 @@
             :style="iconColor"
         />
         <img
-            :src="card.image || card.img" 
-            :alt="card.name + ' image'"
+            :src="card.image" 
+            :alt="card.title + ' image'"
         />
     </div>
 </template>
@@ -44,11 +44,6 @@ export default {
             return `color: ${color}`
         }
     }
-    // data() {
-    //     return {
-    //         partners: PARTNERS
-    //     }
-    // }
 }
 </script>
 
