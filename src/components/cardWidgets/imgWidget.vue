@@ -12,9 +12,15 @@
             :style="iconColor"
         />
         <img
+            v-if="card.image"
             :src="card.image" 
             :alt="card.title + ' image'"
         />
+        <span
+            v-else
+        >
+            {{card.title}} image
+        </span>
     </div>
 </template>
 
@@ -55,6 +61,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: lightgrey;
 
     .img {
         object-fit: cover;

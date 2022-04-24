@@ -3,7 +3,8 @@ import _ from 'lodash';
 export default {
     data() {
         return {
-            spaceHighlightsMapping: {
+            //imported data depending on the route of the TopicPage
+            museumMapping: {
                 "id": "id",
                 "image": "image",
                 "name": "title",
@@ -18,10 +19,10 @@ export default {
                 "quiz": {
                     "$linkWidget": "type",
                     "$Take a quiz!": "text",
-                    "_value": "path"
+                    "_": "path"
                 }
             },
-            spacePartnersMapping: {
+            partnerMapping: {
                 observatory: {
                     "image": "image",
                     "name": "title",
@@ -34,48 +35,50 @@ export default {
     },
     methods: {
         formatHighlights(highlights) {
-            const formattedHighlights = [];
-            highlights.forEach(highlight => {
-                const isPartner = _.has(highlight, 'partner')
-                const keyMap = isPartner ? this.spacePartnersMapping[highlight.partner] : this.spaceHighlightsMapping;
-                
-                const mappedHighlight = this.mapKeys(highlight, highlight, keyMap, null)
-                const widgets = Object.values(mappedHighlight).filter(key => key.length) //isolate widget arrays from obj
-                const highlightNoWidgets = Object.values(mappedHighlight).filter(key => !key.length) //filter widget arrays from obj
-                let formattedHighlight = { ...this.defaultObj(highlightNoWidgets), widgets: this.defaultWidgets(widgets)} //default obj by one level, and reattach widgets
-                formattedHighlights.push(formattedHighlight)
+            return highlights.map(highlight => {
+                const mappedHighlight = this.mapHighlight(highlight) // First, reformat the highlight's values to generic keys
+                const onlyWidgets = this.filterForArray(mappedHighlight, true) // Isolate the widgets from the rest of the card
+                const onlyContent = this.filterForArray(mappedHighlight, false)
+                const formattedHighlight = { // Rejoin the widgets to the card in their own array
+                    ...this.mergeObj(onlyContent),
+                    widgets: onlyWidgets.map(widget => this.mergeObj(widget))
+                }
+                return formattedHighlight
             })
-            return formattedHighlights
+        },
+        mapHighlight(highlight) {
+            const isPartner = _.has(highlight, 'partner')
+            const keyMap = isPartner ? this.partnerMapping[highlight.partner] : this.museumMapping;
+            return this.mapKeys(highlight, highlight, keyMap, null)
         },
         mapKeys(base, obj = {}, keyMap, keyMapPrev = {}) {
             return Object.keys(keyMap).map(key => {
                 const path = keyMap[key];
-                const isObject = typeof(path) === "object"
 
-                if (isObject) {
-                    if (!base[key]) return { [path]: null }
-                    return this.mapKeys(base, obj[key], path, keyMap)
-                } else {
-                    const customString = _.startsWith(key, '$') ? key.substring(1) : null
-                    const pathParent = _.startsWith(key, '_') ? base[_.findKey(keyMapPrev, function(o) { return o === keyMap })] : null
-                    let value =  obj[key] || customString || pathParent
-                    return { [path]: value }
+                if (_.isObject(path)) { //If a deeper level exists on the highlight, repeat
+                    return base[key] ? this.mapKeys(base, obj[key], path, keyMap) : { [path]: null }
                 }
+                
+                const mappedValue = (key) => { //If this is the final level, dermine the format of the key
+                    if (_.startsWith(key, '$')) return this.removeFirstChar(key)
+                    if (_.startsWith(key, '_')) return base[this.findKey(keyMapPrev, keyMap)]
+                    return obj[key]
+                }
+
+                return { [path]: mappedValue(key) }
             })
         },
-        defaultObj(obj) {
-            let defaultObj = {}
-            Object.values(obj).map(obj => {
-                defaultObj = { ...defaultObj, [Object.keys(obj)[0]]:Object.values(obj)[0] }
-            })
-            return defaultObj
+        mergeObj(obj) {
+            return Object.assign({}, ...obj) //merge an array of single-prop objects into a single object
         },
-        defaultWidgets(widgets) {
-            const arr = []
-            widgets.forEach(widget => {
-                arr.push(Object.assign({}, ...widget))
-            })
-            return arr
+        removeFirstChar(str) {
+            return str.substring(1)
+        },
+        findKey(obj, value) {
+            return _.findKey(obj, e => e === value)
+        },
+        filterForArray(obj, includeArr) {
+            return Object.values(obj).filter(val => includeArr ? val.length : !val.length)
         }
     }
 }
