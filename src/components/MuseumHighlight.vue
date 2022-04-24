@@ -5,40 +5,30 @@
             :card="card"
         />
         <h2>
-            {{card.name}}
+            {{card.title}}
         </h2>
         <p>
-            <!-- Different partners will format their data differently. Its probably not safe to assume that their data will
-            be tied to intuitive keys. Although how often will there be a new partner? Can this be done manually?
-            These OR options could be in their own array and imported for easy adjustment. -->
-            {{card.description || card.info}}
+            {{card.desc}}
         </p>
-        <div
-            v-for="content in contents"
-            :key="content" 
-        >
-            <component
-                class="museum-highlight__unique-content"
-
-                v-if="content in card"
-                :is="`${content}Widget`"
-                :card="card"
-            />
-        </div>
+        <component
+            class="museum-highlight__unique-content"
+            v-for="widget in card.widgets"
+            :key="widget"
+            :is="widget.type"
+            :data="widget"
+        />
     </div>
 </template>
 
 <script>
-import { imgWidget, newsWidget, quizWidget } from './cardWidgets'
+import { imgWidget, textWidget, linkWidget } from './cardWidgets'
 
 
 export default {
     name: 'MuseumHighlight',
     components: {
-        imgWidget, newsWidget, quizWidget
+        imgWidget, textWidget, linkWidget
     },
-    mixins: [
-    ],
     props: {
         page: Object,
         card: Object,
@@ -51,9 +41,6 @@ export default {
         contents() {
             return this.page.contents
         }
-    },
-    methods: {
-
     }
 };
 </script>
@@ -81,6 +68,7 @@ export default {
         padding: 10px;
         border-radius: 10px;
         background: rgb(243, 243, 243);
+        border: 2px solid lightgrey;
     }
 }
 </style>

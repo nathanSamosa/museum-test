@@ -1,9 +1,9 @@
 import imgWidget from './imgWidget.vue'
-import newsWidget from './newsWidget.vue'
-import quizWidget from './quizWidget.vue'
+import textWidget from './textWidget.vue'
+import linkWidget from './linkWidget.vue'
 
 export {
     imgWidget,
-    newsWidget,
-    quizWidget
+    textWidget,
+    linkWidget
 }

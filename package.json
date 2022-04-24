@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/eslint-plugin": "^7.17.7",
     "core-js": "^3.8.3",
+    "lodash": "^4.17.21",
     "sass": "^1.50.1",
     "sass-loader": "^12.6.0",
     "vue": "^3.2.13"
@@ -35,7 +36,9 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": { "vue/multi-word-component-names": 0 }
+    "rules": {
+      "vue/multi-word-component-names": 0
+    }
   },
   "browserslist": [
     "> 1%",

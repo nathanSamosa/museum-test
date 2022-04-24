@@ -6,10 +6,8 @@ const PAGES = {
             icon: "star",
             color: "#F0B800"
         },
-        contents: ["textWidget", "linkWidget"]
+        contents: ["news", "quiz"]
     },
-
-
     // DINOSAUR: {
     //     accentColor: "#199600",
     //     name: "Dinosaurs",
@@ -27,7 +25,13 @@ const PARTNERS = {
     }
 }
 
+const API_ROUTES = {
+    SPACE_GET: `${"someRoute"}/space`,
+    DINOSAUR_GET: `${"someRoute"}/dinosaur`,
+}
+
 export {
     PAGES,
     PARTNERS,
+    API_ROUTES 
 }

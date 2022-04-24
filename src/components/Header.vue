@@ -8,9 +8,9 @@
                 National History Museum
             </h1>
         </div>
-        <i
+        <!-- <i
             class="fa-solid fa-bars fa-2xl"
-        />
+        /> -->
     </header>
 </template>
 
@@ -36,10 +36,10 @@ export default {
     }
 }
 
-$breakpoint-logo: 600px;
-@media (max-width: $breakpoint-logo) {
-    h1 {
-        display: none;
-    }
-}
+// $breakpoint-logo: 600px;
+// @media (max-width: $breakpoint-logo) {
+//     h1 {
+//         display: none;
+//     }
+// }
 </style>
