@@ -56,7 +56,7 @@ export default {
                 const path = keyMap[key];
 
                 if (_.isObject(path)) { //If a deeper level exists on the highlight, repeat
-                    return base[key] ? this.mapKeys(base, obj[key], path, keyMap) : { [path]: null }
+                    return base[key] ? this.mapKeys(base, obj[key], path, keyMap) : { [key]: null }
                 }
                 
                 const mappedValue = (key) => { //If this is the final level, dermine the format of the key
